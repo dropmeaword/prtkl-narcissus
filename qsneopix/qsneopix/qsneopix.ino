@@ -16,6 +16,7 @@ bool bRefresh;
 
 #include "trance.h"
 #include "colors.h"
+#include "segment.h"
 
 ///////////////////////////////////////////
 void setup() {
@@ -46,6 +47,10 @@ void pattern_test() {
 }
 
 void loop() {
+  if(bRefresh) {
+    segmentrgb(segid, rval, gval, bval);
+    bRefresh = false;
+  }
 }
 
 void serialEvent() {
