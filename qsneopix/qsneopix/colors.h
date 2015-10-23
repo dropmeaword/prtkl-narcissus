@@ -63,5 +63,8 @@ void pattern_test() {
   segmentl(NUMBERIDS-1, 0);*/
 }
 
-
+void pxstatus_ready() {
+  strip.setPixelColor(0,0,10,0);
+  strip.show();
+}
 

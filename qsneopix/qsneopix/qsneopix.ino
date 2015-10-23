@@ -6,10 +6,7 @@
 #define PIN 6
 #define NUMBERIDS 8
 #define NUMBERPIXELSPERID 15
-#define NUMBERPIXELS NUMBERIDS*NUMBERPIXELSPERID
-
-
-int idArray[NUMBERIDS];
+#define NUMBERPIXELS ((NUMBERIDS*NUMBERPIXELSPERID)+1)
 
 #define PACKETLEN 6
 byte serin[PACKETLEN];
@@ -27,15 +24,11 @@ bool bRefresh;
 void setup() {
   Serial.begin(DATARATE);
 
-  // initialize the ID per segment
-  for(int i = 0; i < NUMBERIDS; i++) {
-    idArray[i] = i+1;
-  }
-
   strip.begin();
   strip.show();
 
   pattern_test();
+  pxstatus_ready();
 }
 
 void loop() {
