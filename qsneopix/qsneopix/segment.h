@@ -1,21 +1,22 @@
 
-void segmentrgbl(uint8_t segID, uint8_t r, uint8_t g, uint8_t b, uint8_t brightness){
+void segmentrgbl(int segID, int r, int g, int b, int brightness) {
+  if (segID < 0) return;
   int n, m;
-  n = (segID-1) * 6;
-  m = n + 6;
+  n = segID * NUMBERPIXELSPERID;
+  m = n + NUMBERPIXELSPERID;
 
   for (int i = n; i < m; i++){
-   strip.setPixelColor(i, (brightness*r/255) , (brightness*g/255), (brightness*b/255));
+   strip.setPixelColor(i, (brightness*r/255.0) , (brightness*g/255.0), (brightness*b/255.0));
  }
  
  strip.show();
 }
 
-void segmentl(uint8_t segID, uint8_t lum) {
-  segmentrgbl(segID, 1, 1, 1, 255);
+void segmentl(int segID, int lum) {
+  segmentrgbl(segID, 255, 255, 255, lum);
 }
 
-void segmentrgb(uint8_t segID, uint8_t r, uint8_t g, uint8_t b){
+void segmentrgb(int segID, int r, int g, int b){
   segmentrgbl(segID, r, g, b, 255);
 }
 
