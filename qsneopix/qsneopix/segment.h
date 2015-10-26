@@ -7,11 +7,15 @@ void segmentrgbl(int segID, int r, int g, int b, int brightness) {
   n = (segID * NUMBERPIXELSPERID)+1; // skip first pixels
   m = (n + NUMBERPIXELSPERID);
 
-  for (int i = n; i < m; i++){
-   strip.setPixelColor(i, (brightness*r/255.0) , (brightness*g/255.0), (brightness*b/255.0));
+  for (int i = n; i < m; i++) {
+    leds[i].r = (brightness*r/255.0);
+    leds[i].g = (brightness*g/255.0);
+    leds[i].b = (brightness*b/255.0);
+   //strip.setPixelColor(i, (brightness*r/255.0) , (brightness*g/255.0), (brightness*b/255.0));
  }
- 
- strip.show();
+
+ FastLED.show();
+ //strip.show();
 }
 
 void segmentl(int segID, int lum) {
