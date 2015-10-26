@@ -1,9 +1,10 @@
 import os, sys
+import time
 import traceback
 import bitalino
 from OSC import OSCClient, OSCServer, OSCMessage
 
-send_address = ('127.0.0.1', 55551)
+send_address = ('192.168.1.77', 55551) #('127.0.0.1', 55551)
 bitadev = None
 osctx = None
 
@@ -36,9 +37,18 @@ def bitalino_init():
         sys.exit(2)
 
 def main():
-    global bitadev
-    bitalino_init()
+    global bitadev, osctx
     osc_init()
+
+    # while True:
+    #     msg = OSCMessage()
+    #     msg.setAddress("/init")
+    #     msg.append([1, 2, 3, 4, 5, 6, 7, 8])
+    #     print msg
+    #     osctx.send( msg )
+    #     time.sleep(2)
+
+    bitalino_init()
     try:
         print "Entering reading loop..."
         while True:
@@ -47,7 +57,12 @@ def main():
             for s in samples:
                 msg = OSCMessage()
                 msg.setAddress("/biosample")
-                msg.append(s)
+                out = []
+
+                for sval in s:
+                    out.append(sval / 1024)
+
+                msg.append(out)
                 print msg
                 osctx.send( msg )
     except KeyboardInterrupt as e:
