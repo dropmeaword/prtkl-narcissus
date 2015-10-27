@@ -48,17 +48,6 @@ void setup() {
 
   pattern_test();
   pxstatus_ready();
-
-  // do a fade
-  for(int i = 0; i < NUMBERPIXELS; i++) {
-    target[i] = 0x101000;
-  }
-  
-  // fade segment
-  for(int i = 0; i < NUMBER_SEGMENTS; i++) {
-    int r = random(5);
-    sfader[i].fadeto(testclr[r]).push(random(200, 5000));
-  }
 }
 
 void loop() {
