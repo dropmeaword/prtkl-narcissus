@@ -1,4 +1,3 @@
-#include <Timer.h>
 #include <FastLED.h>
 #include "fader.h"
 
