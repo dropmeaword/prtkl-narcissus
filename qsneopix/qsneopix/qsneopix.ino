@@ -9,7 +9,7 @@
 #define PIXELS_PER_SEGMENT 15
 #define NUMBERPIXELS ((NUMBER_SEGMENTS*PIXELS_PER_SEGMENT)+1)
 
-#define PACKETLEN 6
+#define PACKETLEN 7
 byte serin[PACKETLEN];
 
 int roomA[4] = {0, 1, 2, 3};
@@ -20,7 +20,7 @@ CRGB testclr[5] = {CRGB(0x202000), CRGB(0x202010), CRGB(0x200020), CRGB(0x002020
 CRGB leds[NUMBERPIXELS];
 CRGB target[NUMBERPIXELS];
 
-byte segid, rval, gval, bval;
+byte segid, rval, gval, bval, durval;
 bool bRefresh;
 
 #include "segment.h"
@@ -73,12 +73,12 @@ void loop() {
 
 void loopLight() {
   if(bRefresh) {
-
+    CRGB triad = CRGB(rval, gval, bval);
     // is segment referring to the whole of Room A
     if(segid == 8) {
       for(int j = 0; j <= 3; j++) {
           int segment = roomA[j];
-          sfader[segment].fadeto(CRGB(rval, gval, bval)).push(2000);
+          sfader[segment].fadeto(triad).push(durval);
         //segmentrgb(roomA[j], rval, gval, bval);
       }
     // is segment referring to the whole of Room B
@@ -86,10 +86,11 @@ void loopLight() {
       for(int j = 0; j <= 3; j++) {
         //segmentrgb(roomB[j], rval, gval, bval);
           int segment = roomB[j];
-          sfader[segment].fadeto(CRGB(rval, gval, bval)).push(2000);
+          sfader[segment].fadeto(triad).push(durval);
       }
     } else {
-      segmentrgb(segid, rval, gval, bval);
+      //segmentrgb(segid, rval, gval, bval);
+      sfader[segid].fadeto(triad).push(durval);
     }
     
     bRefresh = false;
@@ -102,10 +103,11 @@ void serialPump() {
     
     if ((serin[0] == 254) && (serin[PACKETLEN-1] == 255)) // is marker for beginning/end of message?
     {
-      segid = serin[1];
-      rval  = serin[2];
-      gval  = serin[3];
-      bval  = serin[4];
+      segid    = serin[1];
+      rval     = serin[2];
+      gval     = serin[3];
+      bval     = serin[4];
+      durval   = serin[5];
       bRefresh = true;
     }
 
