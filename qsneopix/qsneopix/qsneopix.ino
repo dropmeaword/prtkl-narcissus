@@ -23,7 +23,6 @@ byte segid, rval, gval, bval, durval;
 bool bRefresh;
 
 #include "segment.h"
-#include "trance.h"
 #include "colors.h"
 
 SegmentFader sfader[NUMBER_SEGMENTS];
