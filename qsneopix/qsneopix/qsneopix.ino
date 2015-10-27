@@ -61,12 +61,12 @@ void loop() {
 
 void loopLight() {
   if(bRefresh) {
-    CRGB triad = CRGB(rval, gval, bval);
+    //CRGB triad = CRGB(rval, gval, bval);
     // is segment referring to the whole of Room A
     if(segid == 8) {
       for(int j = 0; j <= 3; j++) {
           int segment = roomA[j];
-          sfader[segment].fadeto(triad).push(durval);
+          sfader[segment].fadeto(CRGB(rval, gval, bval)).push(durval);
         //segmentrgb(roomA[j], rval, gval, bval);
       }
     // is segment referring to the whole of Room B
@@ -74,11 +74,11 @@ void loopLight() {
       for(int j = 0; j <= 3; j++) {
         //segmentrgb(roomB[j], rval, gval, bval);
           int segment = roomB[j];
-          sfader[segment].fadeto(triad).push(durval);
+          sfader[segment].fadeto(CRGB(rval, gval, bval)).push(durval);
       }
     } else {
       //segmentrgb(segid, rval, gval, bval);
-      sfader[segid].fadeto(triad).push(durval);
+      sfader[segid].fadeto(CRGB(rval, gval, bval)).push(durval);
     }
     
     bRefresh = false;
