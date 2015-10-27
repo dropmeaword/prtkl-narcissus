@@ -2,13 +2,11 @@
 #include <FastLED.h>
 #include "fader.h"
 
-//#include <Adafruit_NeoPixel.h>
-
-#define DATARATE 57600 //115200
+#define DATARATE 57600
 
 #define PIN 6
-#define NUMBER_SEGMENTS 8
-#define PIXELS_PER_SEGMENT 10
+#define NUMBER_SEGMENTS 4
+#define PIXELS_PER_SEGMENT 30
 #define NUMBERPIXELS ((NUMBER_SEGMENTS*PIXELS_PER_SEGMENT)+1)
 
 #define PACKETLEN 6
@@ -17,10 +15,10 @@ byte serin[PACKETLEN];
 int roomA[4] = {0, 1, 2, 3};
 int roomB[4] = {4, 5, 6, 7};
 
+CRGB testclr[5] = {CRGB(0x202000), CRGB(0x202010), CRGB(0x200020), CRGB(0x002020), CRGB(0x100020)};
+
 CRGB leds[NUMBERPIXELS];
 CRGB target[NUMBERPIXELS];
-
-//Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMBERPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 byte segid, rval, gval, bval;
 bool bRefresh;
@@ -29,74 +27,47 @@ bool bRefresh;
 #include "trance.h"
 #include "colors.h"
 
-//Fader fader;
-
-//SegmentFader sfader[NUMBERIDS];
-SegmentFader sf;
-SegmentFader sf2;
-SegmentFader sf3;
+SegmentFader sfader[NUMBER_SEGMENTS];
 
 ///////////////////////////////////////////
 void setup() {
   Serial.begin(DATARATE);
 
-  //strip.begin();
-  //strip.show();
+  randomSeed(analogRead(0));
 
   FastLED.addLeds<NEOPIXEL, PIN>(leds, NUMBERPIXELS);
-  //fader.bind(leds, NUMBERPIXELS);
-
-  sf.bind(leds, NUMBERPIXELS, 1, 20);
-  sf2.bind(leds, NUMBERPIXELS, 21, 40);
-  sf3.bind(leds, NUMBERPIXELS, 41, 60);
   
   // init segment faders
-//  for(int i = 0; i < NUMBER_SEGMENTS; i++) {
-//    int n, m;
-//    n = (i * PIXELS_PER_SEGMENT)+1;
-//    m = (n + PIXELS_PER_SEGMENT);
-//    sfader[i].bind(FastLED, leds, NUMBERPIXELS, n, m);
-//  }
+  int n, m;
+  for(int i = 0; i < NUMBER_SEGMENTS; i++) {
+    n = (i * PIXELS_PER_SEGMENT)+1;
+    m = (n + PIXELS_PER_SEGMENT);
+
+    sfader[i].bind(leds, NUMBERPIXELS, n, m);
+  }
 
   pattern_test();
   pxstatus_ready();
 
-//  // do a fade
-//  for(int i = 0; i < NUMBERPIXELS; i++) {
-//    target[i] = 0x101000;
-//  }
+  // do a fade
+  for(int i = 0; i < NUMBERPIXELS; i++) {
+    target[i] = 0x101000;
+  }
   
-//  fader.frame(target);
-//  fader.push(1000);
-
   // fade segment
-//  sfader[2].fadeto(CRGB(0x200000)).push(5000);
-//  sfader[3].fadeto(CRGB(0x002000)).push(5000);
-//  sfader[4].fadeto(CRGB(0x000020)).push(5000);
-  sf.fadeto(CRGB(0x000020)).push(5000);
-  sf2.fadeto(CRGB(0x001000)).push(5000);
-  sf3.fadeto(CRGB(0x001010)).push(5000);
+  for(int i = 0; i < NUMBER_SEGMENTS; i++) {
+    int r = random(5);
+    sfader[i].fadeto(testclr[r]).push(random(200, 5000));
+  }
 }
 
 void loop() {
-  //serialPump();
+  serialPump();
 
-//  segmentrgb(0, 10, 0, 0);
-//  segmentrgb(1, 0, 10, 0);
-//  segmentrgb(2, 0, 0, 10);
-//  segmentrgb(3, 10, 0, 10);
-//  segmentrgb(4, 0, 10, 10);
-//  segmentrgb(5, 10, 10, 10);
+  for(int i = 0; i < NUMBER_SEGMENTS; i++) {
+    sfader[i].update();
+  }
 
-  sf.update();
-  sf2.update();
-  sf3.update();
-  
-//  fader.update();
-//  for(int i = 0; i < NUMBERIDS; i++) {
-//    sfader[i].update();
-//  }
-/*
   if(bRefresh) {
 
     // is segment referring to the whole of Room A
@@ -115,7 +86,6 @@ void loop() {
     
     bRefresh = false;
   }
-  */
 }
 
 void serialPump() {
@@ -135,6 +105,6 @@ void serialPump() {
     if (Serial.available() < PACKETLEN) {
       while(Serial.read() != -1) ;
     }
+  } // while
 
-  }
 }

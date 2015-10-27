@@ -29,15 +29,15 @@ class CandyFader {
     unsigned long timein;    // time in
 
   public:
-    Fader();
-    Fader& bind(CRGB *leds, int cnt);
+    CandyFader();
+    CandyFader& bind(CRGB *leds, int cnt);
 
     void setEasingFunc( EasingFx func );
 
-    Fader& blank();
-    Fader& frame(CRGB *fbuffer);
-    Fader& push(int d);
-    Fader &update();
+    CandyFader& blank();
+    CandyFader& frame(CRGB *fbuffer);
+    CandyFader& push(int d);
+    CandyFader &update();
 };
 
 /*

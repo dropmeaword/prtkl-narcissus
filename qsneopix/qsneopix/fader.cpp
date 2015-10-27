@@ -3,74 +3,6 @@
 // copying colors:
 //  memmove8( &leds[dest], &leds[src], 10 * sizeof( CRGB) );
 
-//Fader::Fader() {
-//}
-//
-//Fader& Fader::bind(CRGB *leds, int cnt) { //CFastLED& fastledref, CRGB *leds, int cnt) {
-//  live = leds;
-//  ledCount = cnt;
-//  //FLref = fastledref;
-//  cache = new CRGB[ledCount];
-//  blank();
-//  setEasingFunc(Easer_easeInOutCubic);
-//}
-//
-//void Fader::setEasingFunc( EasingFx func ) {
-//  easingfx = func;
-//}
-//
-//Fader& Fader::blank() {
-//  for (int i = 0; i < ledCount; i++) {
-//    live[i]   = CRGB(0,0,0);
-//  }
-//  return *this;
-//}
-//
-//Fader& Fader::frame(CRGB *fbuffer) {
-//  target = fbuffer;
-//  
-//  return *this;
-//}
-//
-//Fader& Fader::push(int d) {
-//  duration = d;
-//  
-//  // cache current live buffer
-//  for (int i = 0; i < ledCount; i++) {
-//    cache[i] = live[i];
-//  }
-//
-//  timein = millis();
-//  bAnimating = true;
-//
-//  return *this;
-//}
-//
-//
-//Fader &Fader::update() {
-//  if(bAnimating) {
-//    float elapsed = millis() - timein;
-//    for (int i = 0; i < ledCount; i++) {
-//      float cr = easingfx(elapsed, cache[i].r, (target[i].r-cache[i].r), duration);
-//      float cg = easingfx(elapsed, cache[i].g, (target[i].g-cache[i].g), duration);
-//      float cb = easingfx(elapsed, cache[i].b, (target[i].b-cache[i].b), duration);
-//      live[i] = CRGB(
-//        int(cr),
-//        int(cg),
-//        int(cb)
-//      );
-//    }
-//
-//    FastLED.show();
-//
-//    // check if we have to stop animating
-//    if(elapsed > duration) {
-//      bAnimating = false;
-//    }
-//    
-//  } // bAnimating
-//}
-
 SegmentFader::SegmentFader() {
 }
 
@@ -138,7 +70,7 @@ SegmentFader &SegmentFader::update() {
 //    Serial.print(" ");
 //    Serial.println();
     
-    for (int i = begins; i <= ends; i++) {
+    for (int i = begins; i < ends; i++) {
       live[i] = CRGB(cr, cg, cb);
     }
 
@@ -151,4 +83,79 @@ SegmentFader &SegmentFader::update() {
     
   } // bAnimating
 }
+
+// ///////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////
+
+
+CandyFader::CandyFader() {
+}
+
+CandyFader& CandyFader::bind(CRGB *leds, int cnt) { //CFastLED& fastledref, CRGB *leds, int cnt) {
+  live = leds;
+  ledCount = cnt;
+  //FLref = fastledref;
+  cache = new CRGB[ledCount];
+  blank();
+  setEasingFunc(Easer_easeInOutCubic);
+}
+
+void CandyFader::setEasingFunc( EasingFx func ) {
+  easingfx = func;
+}
+
+CandyFader& CandyFader::blank() {
+  for (int i = 0; i < ledCount; i++) {
+    live[i]   = CRGB(0,0,0);
+  }
+  return *this;
+}
+
+CandyFader& CandyFader::frame(CRGB *fbuffer) {
+  target = fbuffer;
+  
+  return *this;
+}
+
+CandyFader& CandyFader::push(int d) {
+  duration = d;
+  
+  // cache current live buffer
+  for (int i = 0; i < ledCount; i++) {
+    cache[i] = live[i];
+  }
+
+  timein = millis();
+  bAnimating = true;
+
+  return *this;
+}
+
+
+CandyFader &CandyFader::update() {
+  if(bAnimating) {
+    float elapsed = millis() - timein;
+    for (int i = 0; i < ledCount; i++) {
+      float cr = easingfx(elapsed, cache[i].r, (target[i].r-cache[i].r), duration);
+      float cg = easingfx(elapsed, cache[i].g, (target[i].g-cache[i].g), duration);
+      float cb = easingfx(elapsed, cache[i].b, (target[i].b-cache[i].b), duration);
+      live[i] = CRGB(
+        int(cr),
+        int(cg),
+        int(cb)
+      );
+    }
+
+    FastLED.show();
+
+    // check if we have to stop animating
+    if(elapsed > duration) {
+      bAnimating = false;
+    }
+    
+  } // bAnimating
+}
+
+
 
