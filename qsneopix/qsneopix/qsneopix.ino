@@ -7,9 +7,9 @@
 #define DATARATE 57600 //115200
 
 #define PIN 6
-#define NUMBERIDS 8
-#define NUMBERPIXELSPERID 15
-#define NUMBERPIXELS ((NUMBERIDS*NUMBERPIXELSPERID)+1)
+#define NUMBER_SEGMENTS 8
+#define PIXELS_PER_SEGMENT 10
+#define NUMBERPIXELS ((NUMBER_SEGMENTS*PIXELS_PER_SEGMENT)+1)
 
 #define PACKETLEN 6
 byte serin[PACKETLEN];
@@ -29,7 +29,12 @@ bool bRefresh;
 #include "trance.h"
 #include "colors.h"
 
-Fader fader;
+//Fader fader;
+
+//SegmentFader sfader[NUMBERIDS];
+SegmentFader sf;
+SegmentFader sf2;
+SegmentFader sf3;
 
 ///////////////////////////////////////////
 void setup() {
@@ -39,26 +44,58 @@ void setup() {
   //strip.show();
 
   FastLED.addLeds<NEOPIXEL, PIN>(leds, NUMBERPIXELS);
-  fader.bind(leds, NUMBERPIXELS, FastLED);
+  //fader.bind(leds, NUMBERPIXELS);
+
+  sf.bind(leds, NUMBERPIXELS, 1, 20);
+  sf2.bind(leds, NUMBERPIXELS, 21, 40);
+  sf3.bind(leds, NUMBERPIXELS, 41, 60);
+  
+  // init segment faders
+//  for(int i = 0; i < NUMBER_SEGMENTS; i++) {
+//    int n, m;
+//    n = (i * PIXELS_PER_SEGMENT)+1;
+//    m = (n + PIXELS_PER_SEGMENT);
+//    sfader[i].bind(FastLED, leds, NUMBERPIXELS, n, m);
+//  }
 
   pattern_test();
   pxstatus_ready();
 
-  delay(5000);
+//  // do a fade
+//  for(int i = 0; i < NUMBERPIXELS; i++) {
+//    target[i] = 0x101000;
+//  }
   
-  // do a fade
-  for(int i = 0; i < NUMBERPIXELS; i++) {
-    target[i] = 0x202000;
-  }
-  
-  fader.frame(target);
-  fader.push(5000);
+//  fader.frame(target);
+//  fader.push(1000);
+
+  // fade segment
+//  sfader[2].fadeto(CRGB(0x200000)).push(5000);
+//  sfader[3].fadeto(CRGB(0x002000)).push(5000);
+//  sfader[4].fadeto(CRGB(0x000020)).push(5000);
+  sf.fadeto(CRGB(0x000020)).push(5000);
+  sf2.fadeto(CRGB(0x001000)).push(5000);
+  sf3.fadeto(CRGB(0x001010)).push(5000);
 }
 
 void loop() {
   //serialPump();
 
-  fader.update();
+//  segmentrgb(0, 10, 0, 0);
+//  segmentrgb(1, 0, 10, 0);
+//  segmentrgb(2, 0, 0, 10);
+//  segmentrgb(3, 10, 0, 10);
+//  segmentrgb(4, 0, 10, 10);
+//  segmentrgb(5, 10, 10, 10);
+
+  sf.update();
+  sf2.update();
+  sf3.update();
+  
+//  fader.update();
+//  for(int i = 0; i < NUMBERIDS; i++) {
+//    sfader[i].update();
+//  }
 /*
   if(bRefresh) {
 

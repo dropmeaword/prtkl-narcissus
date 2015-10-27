@@ -2,12 +2,18 @@
 #define FADER_H
 
 #include <math.h>
+#include <FastLED.h>
 #include "easing.h"
 
 typedef float (*EasingFx)(float t, float b, float c, float d);
 
-class Fader {
-  private:
+/*
+ * The CandyFader can fade any pixel with any value to any other pixel with any other value using
+ * Penner's easing equations for interpolation. The CandyFader refreshes the WHOLE LED strip
+ * on every step of the fade.
+ */
+class CandyFader {
+  protected:
     int      ledCount;
     bool     bAnimating;
 
@@ -15,7 +21,7 @@ class Fader {
     CRGB     *cache;
     CRGB     *target;
 
-    CFastLED FLref;
+    //CFastLED FLref;
 
     EasingFx easingfx;
 
@@ -23,70 +29,55 @@ class Fader {
     unsigned long timein;    // time in
 
   public:
-    Fader() {
-    }
+    Fader();
+    Fader& bind(CRGB *leds, int cnt);
 
-    Fader& bind(CRGB *leds, int cnt, CFastLED& fastledref) {
-      live = leds;
-      ledCount = cnt;
-      FLref = fastledref;
-      cache = new CRGB[ledCount];
-      this->clear();
-      setEasingFunc(Easer_easeInOutCubic);
-    }
+    void setEasingFunc( EasingFx func );
 
-    void setEasingFunc( EasingFx func ) {
-      easingfx = func;
-    }
+    Fader& blank();
+    Fader& frame(CRGB *fbuffer);
+    Fader& push(int d);
+    Fader &update();
+};
 
-    Fader& clear() {
-      for (int i = 0; i < ledCount; i++) {
-        live[i]   = CRGB(0,0,0);
-      }
-      return *this;
-    }
+/*
+ * The SegmentFader can fade any block of LEDs on a given strip from one color to another color. Each block
+ * has a single color. Only those LEDs in the block affected will be refreshed on every frame. 
+ * 
+ * @NOTE For some reason inheriting from the other more general fader makes the Arduino choke, so I copied and pasted
+ * a lot of code that should really be inherited.
+ */
+class SegmentFader { //: public Fader {
+  private:
+    int      begins;
+    int      ends;
 
-    Fader& frame(CRGB *fbuffer) {
-      target = fbuffer;
-    }
+    CRGB     targetc;
+    CRGB     cachec;
 
-    Fader& push(int d) {
-      duration = d;
-      
-      // cache current live buffer
-      for (int i = 0; i < ledCount; i++) {
-        cache[i] = live[i];
-      }
- 
-      timein = millis();
-      bAnimating = true;
-    }
-    
+    int      ledCount;
+    bool     bAnimating;
 
-    Fader &update() {
-      if(bAnimating) {
-        float elapsed = millis() - timein;
-        for (int i = 0; i < ledCount; i++) {
-          float cr = easingfx(elapsed, cache[i].r, (target[i].r-cache[i].r), duration);
-          float cg = easingfx(elapsed, cache[i].g, (target[i].g-cache[i].g), duration);
-          float cb = easingfx(elapsed, cache[i].b, (target[i].b-cache[i].b), duration);
-          live[i] = CRGB(
-            int(cr),
-            int(cg),
-            int(cb)
-          );
-        }
+    CRGB     *live;
+    CRGB     *cache;
+    CRGB     *target;
 
-        FLref.show();
+    //CFastLED FLref;
 
-        // check if we have to stop animating
-        if(elapsed > duration) {
-          bAnimating = false;
-        }
-        
-      } // bAnimating
-    }
+    EasingFx easingfx;
 
+    unsigned long duration;  // duration
+    unsigned long timein;    // time in
+  public:
+    SegmentFader();
+
+    void setEasingFunc( EasingFx func );
+
+    SegmentFader& bind(CRGB *leds, int cnt, int b, int e);
+    SegmentFader& push(int d);
+    SegmentFader& set(CRGB val);
+    SegmentFader& fadeto(CRGB val);
+    SegmentFader &update();
 };
 
 #endif
