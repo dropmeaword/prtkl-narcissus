@@ -5,8 +5,8 @@
 #define DATARATE 57600
 
 #define PIN 6
-#define NUMBER_SEGMENTS 4
-#define PIXELS_PER_SEGMENT 30
+#define NUMBER_SEGMENTS 8
+#define PIXELS_PER_SEGMENT 15
 #define NUMBERPIXELS ((NUMBER_SEGMENTS*PIXELS_PER_SEGMENT)+1)
 
 #define PACKETLEN 6
@@ -68,17 +68,25 @@ void loop() {
     sfader[i].update();
   }
 
+  loopLight();
+}
+
+void loopLight() {
   if(bRefresh) {
 
     // is segment referring to the whole of Room A
     if(segid == 8) {
       for(int j = 0; j <= 3; j++) {
-        segmentrgb(roomA[j], rval, gval, bval);
+          int segment = roomA[j];
+          sfader[segment].fadeto(CRGB(rval, gval, bval)).push(2000);
+        //segmentrgb(roomA[j], rval, gval, bval);
       }
     // is segment referring to the whole of Room B
     } else if (segid == 9) {
       for(int j = 0; j <= 3; j++) {
-        segmentrgb(roomB[j], rval, gval, bval);
+        //segmentrgb(roomB[j], rval, gval, bval);
+          int segment = roomB[j];
+          sfader[segment].fadeto(CRGB(rval, gval, bval)).push(2000);
       }
     } else {
       segmentrgb(segid, rval, gval, bval);
