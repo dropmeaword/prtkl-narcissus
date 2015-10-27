@@ -19,7 +19,8 @@ CRGB testclr[5] = {CRGB(0x202000), CRGB(0x202010), CRGB(0x200020), CRGB(0x002020
 CRGB leds[NUMBERPIXELS];
 CRGB target[NUMBERPIXELS];
 
-byte segid, rval, gval, bval, durval;
+byte segid, rval, gval, bval;
+long durval;
 bool bRefresh;
 
 #include "segment.h"
@@ -94,7 +95,7 @@ void serialPump() {
       rval     = serin[2];
       gval     = serin[3];
       bval     = serin[4];
-      durval   = serin[5];
+      durval   = 100 * serin[5];
       bRefresh = true;
     }
 
