@@ -1,31 +1,49 @@
-#include <Timer.h>
-#include <Adafruit_NeoPixel.h>
+#include <FastLED.h>
+#include "fader.h"
 
-#define DATARATE 9600 //115200
+#define DATARATE 57600
 
 #define PIN 6
-#define NUMBERIDS 8
-#define NUMBERPIXELSPERID 15
-#define NUMBERPIXELS ((NUMBERIDS*NUMBERPIXELSPERID)+1)
+#define NUMBER_SEGMENTS 8
+#define PIXELS_PER_SEGMENT 15
+#define NUMBERPIXELS ((NUMBER_SEGMENTS*PIXELS_PER_SEGMENT)+1)
 
-#define PACKETLEN 6
+#define PACKETLEN 7
 byte serin[PACKETLEN];
 
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMBERPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+int roomA[4] = {0, 1, 2, 3};
+int roomB[4] = {4, 5, 6, 7};
+
+CRGB testclr[5] = {CRGB(0x202000), CRGB(0x202010), CRGB(0x200020), CRGB(0x002020), CRGB(0x100020)};
+
+CRGB leds[NUMBERPIXELS];
+CRGB target[NUMBERPIXELS];
 
 byte segid, rval, gval, bval;
+long durval;
 bool bRefresh;
 
 #include "segment.h"
-#include "trance.h"
 #include "colors.h"
+
+SegmentFader sfader[NUMBER_SEGMENTS];
 
 ///////////////////////////////////////////
 void setup() {
   Serial.begin(DATARATE);
 
-  strip.begin();
-  strip.show();
+  randomSeed(analogRead(0));
+
+  FastLED.addLeds<NEOPIXEL, PIN>(leds, NUMBERPIXELS);
+  
+  // init segment faders
+  int n, m;
+  for(int i = 0; i < NUMBER_SEGMENTS; i++) {
+    n = (i * PIXELS_PER_SEGMENT)+1;
+    m = (n + PIXELS_PER_SEGMENT);
+
+    sfader[i].bind(leds, NUMBERPIXELS, n, m);
+  }
 
   pattern_test();
   pxstatus_ready();
@@ -34,22 +52,50 @@ void setup() {
 void loop() {
   serialPump();
 
+  for(int i = 0; i < NUMBER_SEGMENTS; i++) {
+    sfader[i].update();
+  }
+
+  loopLight();
+}
+
+void loopLight() {
   if(bRefresh) {
-    segmentrgb(segid, rval, gval, bval);
+    //CRGB triad = CRGB(rval, gval, bval);
+    // is segment referring to the whole of Room A
+    if(segid == 8) {
+      for(int j = 0; j <= 3; j++) {
+          int segment = roomA[j];
+          sfader[segment].fadeto(CRGB(rval, gval, bval)).push(durval);
+        //segmentrgb(roomA[j], rval, gval, bval);
+      }
+    // is segment referring to the whole of Room B
+    } else if (segid == 9) {
+      for(int j = 0; j <= 3; j++) {
+        //segmentrgb(roomB[j], rval, gval, bval);
+          int segment = roomB[j];
+          sfader[segment].fadeto(CRGB(rval, gval, bval)).push(durval);
+      }
+    } else {
+      //segmentrgb(segid, rval, gval, bval);
+      sfader[segid].fadeto(CRGB(rval, gval, bval)).push(durval);
+    }
+    
     bRefresh = false;
   }
 }
 
 void serialPump() {
   while(Serial.available() > 0) {
-    Serial.readBytes(serin, PACKETLEN); // read 5 bytes
+    Serial.readBytes(serin, PACKETLEN);
     
     if ((serin[0] == 254) && (serin[PACKETLEN-1] == 255)) // is marker for beginning/end of message?
     {
-      segid = serin[1];
-      rval  = serin[2];
-      gval  = serin[3];
-      bval  = serin[4];
+      segid    = serin[1];
+      rval     = serin[2];
+      gval     = serin[3];
+      bval     = serin[4];
+      durval   = 100 * serin[5];
       bRefresh = true;
     }
 
@@ -57,6 +103,6 @@ void serialPump() {
     if (Serial.available() < PACKETLEN) {
       while(Serial.read() != -1) ;
     }
+  } // while
 
-  }
 }

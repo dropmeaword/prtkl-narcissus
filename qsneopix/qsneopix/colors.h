@@ -2,43 +2,64 @@
 void pattern_bounce() {
   int lum = 255;
   for(int i=0;i<NUMBERPIXELS;i++){
-    strip.setPixelColor(i, lum, lum, lum);
-    strip.show();
+    //strip.setPixelColor(i, lum, lum, lum);
+    //strip.show();
+    leds[i].r = lum;
+    leds[i].g = lum;
+    leds[i].b = lum;
+    FastLED.show();
     delay(4);
   }
 
 /*  for(int i=0;i<NUMBERPIXELS;i++){
     strip.setPixelColor(i, 0, 0, 0);
   }*/
-  strip.show();
+  FastLED.show();
+  //strip.show();
 }
 
 void pattern_bright(int lum) {
   for(int i=0;i<NUMBERPIXELS;i++){
-    strip.setPixelColor(i, lum, lum, lum);
+    //strip.setPixelColor(i, lum, lum, lum);
+    leds[i].r = lum;
+    leds[i].g = lum;
+    leds[i].b = lum;
   }
-  strip.show();
+  FastLED.show();
+  //strip.show();
 }
 
 void pattern_red(int lum){
   for(int i=0;i<NUMBERPIXELS;i++){
-    strip.setPixelColor(i, lum, 0, 0); 
+    leds[i].r = lum;
+    leds[i].g = 0;
+    leds[i].b = 0;
+    //strip.setPixelColor(i, lum, 0, 0); 
   }
-  strip.show();
+  //strip.show();
+  FastLED.show();
 }
 
 void pattern_green(int lum){
   for(int i=0;i<NUMBERPIXELS;i++){
-    strip.setPixelColor(i,0,lum,0);
+    leds[i].r = 0;
+    leds[i].g = lum;
+    leds[i].b = 0;
+    //strip.setPixelColor(i,0,lum,0);
   }
-  strip.show();
+  //strip.show();
+  FastLED.show();
 }
 
 void pattern_blue(int lum){
   for(int i=0;i<NUMBERPIXELS;i++){
-    strip.setPixelColor(i,0,0,lum);
+    leds[i].r = 0;
+    leds[i].g = 0;
+    leds[i].b = lum;
+    //strip.setPixelColor(i,0,0,lum);
   }
-  strip.show();
+  //strip.show();
+  FastLED.show();
 }
 
 
@@ -64,7 +85,9 @@ void pattern_test() {
 }
 
 void pxstatus_ready() {
-  strip.setPixelColor(0,0,10,0);
-  strip.show();
+  leds[0] = 0x000a00;
+  FastLED.show();
+  //strip.setPixelColor(0,0,10,0);
+  //strip.show();
 }
 
