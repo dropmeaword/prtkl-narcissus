@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 202.0, 172.0, 991.0, 610.0 ],
+		"rect" : [ 40.0, 129.0, 387.0, 461.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -1424,7 +1424,7 @@
 					"fontname" : "Arial Bold",
 					"fontsize" : 9.0,
 					"id" : "obj-156",
-					"items" : [ "Bluetooth-Serial-2", ",", "BTUART-DevB", ",", "Bluetooth-Serial-1", ",", "Bluetooth-Modem", ",", "RNBT-7C33-RNI-SPP", ",", "TeZpaD3-WirelessiAP", ",", "usbmodemfa131" ],
+					"items" : [ "Bluetooth-Serial-2", ",", "BTUART-DevB", ",", "Bluetooth-Serial-1", ",", "Bluetooth-Modem", ",", "RNBT-7C33-RNI-SPP", ",", "TeZpaD3-WirelessiAP" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -1530,7 +1530,6 @@
 						"tags" : "",
 						"style" : "",
 						"subpatcher_template" : "",
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-2",
@@ -3575,7 +3574,6 @@
 										"tags" : "",
 										"style" : "",
 										"subpatcher_template" : "",
-										"visible" : 1,
 										"boxes" : [ 											{
 												"box" : 												{
 													"id" : "obj-52",
@@ -5098,7 +5096,7 @@
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 262.0, 201.0, 499.0, 479.0 ],
+						"rect" : [ 625.0, 159.0, 499.0, 479.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -5125,6 +5123,7 @@
 						"tags" : "",
 						"style" : "",
 						"subpatcher_template" : "",
+						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-20",
@@ -5178,7 +5177,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 257.0, 320.0, 58.0, 19.0 ],
+									"patching_rect" : [ 257.000031, 339.0, 58.0, 19.0 ],
 									"style" : "",
 									"text" : "s RVALUE1"
 								}
@@ -5195,7 +5194,7 @@
 									"numoutlets" : 2,
 									"outlettype" : [ "", "bang" ],
 									"parameter_enable" : 0,
-									"patching_rect" : [ 329.333313, 286.0, 48.0, 19.0 ],
+									"patching_rect" : [ 329.333344, 305.0, 48.0, 19.0 ],
 									"style" : ""
 								}
 
@@ -5223,7 +5222,7 @@
 									"numoutlets" : 2,
 									"outlettype" : [ "", "bang" ],
 									"parameter_enable" : 0,
-									"patching_rect" : [ 329.333313, 381.0, 48.0, 19.0 ],
+									"patching_rect" : [ 329.333344, 400.0, 48.0, 19.0 ],
 									"style" : ""
 								}
 
@@ -5239,7 +5238,7 @@
 									"numoutlets" : 2,
 									"outlettype" : [ "", "bang" ],
 									"parameter_enable" : 0,
-									"patching_rect" : [ 329.333313, 348.0, 48.0, 19.0 ],
+									"patching_rect" : [ 329.333344, 367.0, 48.0, 19.0 ],
 									"style" : ""
 								}
 
@@ -5252,7 +5251,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 329.333313, 320.0, 79.0, 19.0 ],
+									"patching_rect" : [ 329.333344, 339.0, 79.0, 19.0 ],
 									"style" : "",
 									"text" : "expr ($f1 * 255)"
 								}
@@ -5268,7 +5267,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 329.333313, 420.0, 57.0, 19.0 ],
+									"patching_rect" : [ 329.333344, 439.0, 57.0, 19.0 ],
 									"style" : "",
 									"text" : "s XVALUE1"
 								}
@@ -5309,7 +5308,7 @@
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 156.0, 81.0, 250.0, 35.0 ],
 									"style" : "",
-									"text" : "/biosample 0.00293 0.000977 0.000977 0.000977 0.000977 0.875977 0."
+									"text" : "/biosample 0.008789 0.000977 0.000977 0.000977 0.000977 0. 0."
 								}
 
 							}
@@ -5368,7 +5367,7 @@
 									"destination" : [ "obj-15", 0 ],
 									"disabled" : 0,
 									"hidden" : 0,
-									"source" : [ "obj-13", 5 ]
+									"source" : [ "obj-13", 0 ]
 								}
 
 							}
@@ -5377,7 +5376,7 @@
 									"destination" : [ "obj-16", 0 ],
 									"disabled" : 0,
 									"hidden" : 0,
-									"midpoints" : [ 338.833313, 312.0, 266.5, 312.0 ],
+									"midpoints" : [ 338.833344, 331.0, 266.500031, 331.0 ],
 									"source" : [ "obj-15", 0 ]
 								}
 
@@ -7794,7 +7793,7 @@
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 127.0, 146.0, 145.0, 22.0 ],
 									"style" : "",
-									"text" : "12 0 0 0"
+									"text" : "1 2 2 2"
 								}
 
 							}
@@ -7853,7 +7852,7 @@
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 22.0, 227.0, 252.0, 156.0 ],
 									"style" : "",
-									"text" : "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+									"text" : "2 2 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
 								}
 
 							}
