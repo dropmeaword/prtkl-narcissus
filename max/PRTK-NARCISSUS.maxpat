@@ -1424,11 +1424,7 @@
 					"fontname" : "Arial Bold",
 					"fontsize" : 9.0,
 					"id" : "obj-156",
-<<<<<<< HEAD
 					"items" : [ "Bluetooth-Serial-2", ",", "BTUART-DevB", ",", "Bluetooth-Serial-1", ",", "Bluetooth-Modem", ",", "RNBT-7C33-RNI-SPP", ",", "TeZpaD3-WirelessiAP" ],
-=======
-					"items" : [ "Bluetooth-Incoming-Port", ",", "Bluetooth-Modem", ",", "bitalino-DevB", ",", "bitalino-DevB-1" ],
->>>>>>> origin/master
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
