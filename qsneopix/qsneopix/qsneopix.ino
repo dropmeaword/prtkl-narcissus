@@ -76,6 +76,18 @@ void loopLight() {
           int segment = roomB[j];
           sfader[segment].fadeto(CRGB(rval, gval, bval)).push(durval);
       }
+    } else if (segid == 10) {
+        sfader[0].fadeto(CRGB(rval, gval, bval)).push(durval);
+        sfader[1].fadeto(CRGB(rval, gval, bval)).push(durval);
+    } else if (segid == 11) {
+        sfader[2].fadeto(CRGB(rval, gval, bval)).push(durval);
+        sfader[3].fadeto(CRGB(rval, gval, bval)).push(durval);
+    } else if (segid == 12) {
+        sfader[4].fadeto(CRGB(rval, gval, bval)).push(durval);
+        sfader[5].fadeto(CRGB(rval, gval, bval)).push(durval);
+    } else if (segid == 13) {
+        sfader[5].fadeto(CRGB(rval, gval, bval)).push(durval);
+        sfader[7].fadeto(CRGB(rval, gval, bval)).push(durval);
     } else {
       //segmentrgb(segid, rval, gval, bval);
       sfader[segid].fadeto(CRGB(rval, gval, bval)).push(durval);
