@@ -22,7 +22,8 @@ SegmentFader& SegmentFader::bind(CRGB *leds, int cnt, int b, int e) {
 }
 
 SegmentFader& SegmentFader::push(int d) {
-  //Fader::push(d);
+  if(bAnimating) return *this; // avoid re-entry 
+
   duration = d;
   
   timein = millis();
@@ -44,6 +45,8 @@ SegmentFader& SegmentFader::set(CRGB val) {
 }
 
 SegmentFader& SegmentFader::fadeto(CRGB val) {
+  if(bAnimating) return *this; // avoid re-entry 
+
   targetc = val;
   return *this;
 }

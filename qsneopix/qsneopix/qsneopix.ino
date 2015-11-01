@@ -86,8 +86,22 @@ void loopLight() {
         sfader[4].fadeto(CRGB(rval, gval, bval)).push(durval);
         sfader[5].fadeto(CRGB(rval, gval, bval)).push(durval);
     } else if (segid == 13) {
-        sfader[5].fadeto(CRGB(rval, gval, bval)).push(durval);
+        sfader[6].fadeto(CRGB(rval, gval, bval)).push(durval);
         sfader[7].fadeto(CRGB(rval, gval, bval)).push(durval);
+    } else if ( (segid >= 20) && (segid < 28) ) {
+        segmentrgb((segid - 20), rval, gval, bval);
+    } else if ( segid == 30 ) {
+        segmentrgb(0, rval, gval, bval);
+        segmentrgb(1, rval, gval, bval);
+    } else if ( segid == 31 ) {
+        segmentrgb(2, rval, gval, bval);
+        segmentrgb(3, rval, gval, bval);
+    } else if ( segid == 32 ) {
+        segmentrgb(4, rval, gval, bval);
+        segmentrgb(5, rval, gval, bval);
+    } else if ( segid == 33 ) {
+        segmentrgb(6, rval, gval, bval);
+        segmentrgb(7, rval, gval, bval);
     } else {
       //segmentrgb(segid, rval, gval, bval);
       sfader[segid].fadeto(CRGB(rval, gval, bval)).push(durval);
