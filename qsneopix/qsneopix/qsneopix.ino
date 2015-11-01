@@ -1,7 +1,7 @@
 #include <FastLED.h>
 #include "fader.h"
 
-#define DATARATE 57600
+#define DATARATE 115200 // 57600
 
 #define PIN 6
 #define NUMBER_SEGMENTS 8
