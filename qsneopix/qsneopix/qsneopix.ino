@@ -3,9 +3,26 @@
 
 #define DATARATE 115200 // 57600
 
+#define PIN_SPI_DTA_1 7
+#define PIN_SPI_CLK_1 11
+
+#define PIN_SPI_DTA_2 6
+#define PIN_SPI_CLK_2 10
+
+#define PIN_SPI_DTA_3 5
+#define PIN_SPI_CLK_3 9
+
+#define PIN_SPI_DTA_4 4
+#define PIN_SPI_CLK_4 8
+
 #define PIN 6
-#define NUMBER_SEGMENTS 8
-#define PIXELS_PER_SEGMENT 15
+//#define NUMBER_SEGMENTS 8
+//#define PIXELS_PER_SEGMENT 7
+
+#define NUMBER_STRIPS 4
+#define NUMBER_SEGMENTS 3
+#define PIXELS_PER_SEGMENT 20
+
 #define NUMBERPIXELS ((NUMBER_SEGMENTS*PIXELS_PER_SEGMENT)+1)
 
 #define PACKETLEN 7
@@ -16,17 +33,23 @@ int roomB[4] = {4, 5, 6, 7};
 
 CRGB testclr[5] = {CRGB(0x202000), CRGB(0x202010), CRGB(0x200020), CRGB(0x002020), CRGB(0x100020)};
 
+CRGB mleds[NUMBER_STRIPS][NUMBERPIXELS];
+CRGB mtarget[NUMBER_STRIPS][NUMBERPIXELS];
+
 CRGB leds[NUMBERPIXELS];
-CRGB target[NUMBERPIXELS];
+//CRGB target[NUMBERPIXELS];
 
 byte segid, rval, gval, bval;
 long durval;
 bool bRefresh;
 
+#include "starsfx.h"
 #include "segment.h"
 #include "colors.h"
 
 SegmentFader sfader[NUMBER_SEGMENTS];
+
+StarsFX stars;
 
 ///////////////////////////////////////////
 void setup() {
@@ -34,29 +57,45 @@ void setup() {
 
   randomSeed(analogRead(0));
 
-  FastLED.addLeds<NEOPIXEL, PIN>(leds, NUMBERPIXELS);
-  
+  FastLED.addLeds<NEOPIXEL, 12>(leds, 10);
+  FastLED.addLeds<APA102, PIN_SPI_DTA_1, PIN_SPI_CLK_1>(mleds[0], NUMBERPIXELS);
+//  FastLED.addLeds<APA102, PIN_SPI_DTA_2, PIN_SPI_CLK_2>(mleds[1], NUMBERPIXELS);
+//  FastLED.addLeds<APA102, PIN_SPI_DTA_3, PIN_SPI_CLK_3>(mleds[2], NUMBERPIXELS);
+//  FastLED.addLeds<APA102, PIN_SPI_DTA_4, PIN_SPI_CLK_4>(mleds[3], NUMBERPIXELS);
+    
   // init segment faders
   int n, m;
   for(int i = 0; i < NUMBER_SEGMENTS; i++) {
     n = (i * PIXELS_PER_SEGMENT)+1;
     m = (n + PIXELS_PER_SEGMENT);
 
-    sfader[i].bind(leds, NUMBERPIXELS, n, m);
+    sfader[i].bind(mleds[0], NUMBERPIXELS, n, m);
   }
 
-  pattern_test();
-  pxstatus_ready();
+  stars.bind(leds, 10);
+
+  pattern_test(leds);
+  pattern_test(mleds[0]);
+//  pattern_test(mleds[2]);
+//  pattern_test(mleds[3]);
+
+//  pattern_test(mleds[2]);
+//  pattern_test(mleds[3]);
+//  pxstatus_ready();
 }
 
 void loop() {
   serialPump();
+
+  stars.update();
 
   for(int i = 0; i < NUMBER_SEGMENTS; i++) {
     sfader[i].update();
   }
 
   loopLight();
+
+  stars.show();
 }
 
 void loopLight() {
