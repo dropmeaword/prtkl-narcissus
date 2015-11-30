@@ -80,6 +80,7 @@ function madeThroughGUI() {
 	run("rotate 0 0 0");
 	run("zoom 576.594425057346");
 	run("speed 5");
+	run("center -6.84475 6.75746");
 
 
 	run("add curve 1");
@@ -89,12 +90,9 @@ function madeThroughGUI() {
 	run("setresize current 20 20");
 	run("add cursor 2");
 	run("setcurve current lastCurve");
-	run("setpos current -13.265 4.10035 0");
+	run("setpos current 6.57895 2.34072 0");
 	run("setpattern current 0 0 1");
-	run("settime current 19004.8667144775");
-	run("setmessage current 20, - ,");
-	run("setboundssourcemode current 1");
-	run("setspeedf current 12");
+	run("settime current 0");
 
 
 	run("add curve 3");
@@ -103,12 +101,11 @@ function madeThroughGUI() {
 	run("setresize current 12 12");
 	run("add cursor 4");
 	run("setcurve current lastCurve");
-	run("setpos current -8.89939 -0.576739 0");
+	run("setpos current 2.47351 2.09383 0");
 	run("setpattern current 0 0 1");
-	run("settime current 1604.97993454337");
+	run("settime current 0");
 	run("setspeed current 1");
 	run("setspeedf current 0");
-	run("setmessage current 20, - ,");
 
 
 	run("add curve 6");
@@ -117,11 +114,10 @@ function madeThroughGUI() {
 	run("setresize current 20 20");
 	run("add cursor 7");
 	run("setcurve current lastCurve");
-	run("setpos current -22.2317 32.9933 0");
+	run("setpos current -6.7858 24.6063 0");
 	run("setpattern current 0 0 1");
 	run("setspeed current 0.10472");
-	run("settime current 209.962557370071");
-	run("setmessage current 20, - ,");
+	run("settime current 0");
 
 
 	run("add trigger 8");
