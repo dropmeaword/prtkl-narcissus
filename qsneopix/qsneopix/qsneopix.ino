@@ -1,3 +1,8 @@
+// ND Hock
+
+// NL69 INGB0008872629
+
+
 #include <FastLED.h>
 #include "fader.h"
 
@@ -73,6 +78,7 @@ void setup() {
   }
 
   stars.bind(leds, 10);
+  stars.refreshRate(100);
 
   pattern_test(leds);
   pattern_test(mleds[0]);

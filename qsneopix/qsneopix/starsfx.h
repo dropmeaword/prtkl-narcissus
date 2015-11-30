@@ -13,6 +13,11 @@ class StarsFX {
     unsigned long duration;  // duration
     unsigned long timein;    // time in
 
+    bool bRefresh;
+    
+    int lum;
+    int rfreq;
+    
     int howmany;
     int pinData;
     int pinClock;
@@ -20,6 +25,8 @@ class StarsFX {
   public:
     StarsFX();
     StarsFX& bind(CRGB *leds, int cnt);
+
+    StartsFX &refreshRate(int freq); // times per second
 
     StarsFX& enter();
     StarsFX& leave();

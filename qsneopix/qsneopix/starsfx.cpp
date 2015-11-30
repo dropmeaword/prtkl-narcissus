@@ -2,6 +2,8 @@
 
 
 StarsFX::StarsFX() {
+  lum = 255;
+  bRefresh = false;
 }
 
 StarsFX& StarsFX::bind(CRGB *leds, int cnt) {
@@ -42,18 +44,26 @@ StarsFX& StarsFX::blank() {
 }
 
 StarsFX& StarsFX::update() {
-  for(int i = 0; i < howmany; i++) {
-    int chance = random(0, 99);
-    if(chance > 97) {
-      live[i].r =  255;
-      live[i].g =  255;
-      live[i].b =  255;
-    } else {
-      live[i].r =  0;
-      live[i].g =  0;
-      live[i].b =  0;
+
+  if(bRefresh) {
+    for(int i = 0; i < howmany; i++) {
+      int chance = random(0, 99);
+      if(chance > 97) {
+        live[i].r =  lum;
+        live[i].g =  lum;
+        live[i].b =  lum;
+      } else {
+        live[i].r =  0;
+        live[i].g =  0;
+        live[i].b =  0;
+      }
+    } // for
+  } else {
+    if( (millis() % rfreq) == 0) {
+      // mark to refresh in next update
+      bRefresh = true;
     }
-  } // for
+  }
 
   return *this;
 } // update
