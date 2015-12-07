@@ -6,6 +6,10 @@ StarsFX::StarsFX() {
   bRefresh = false;
 }
 
+StarsFX &StarsFX::refreshRate(int freq) {
+  rfreq = freq;
+}
+
 StarsFX& StarsFX::bind(CRGB *leds, int cnt) {
     
     live = leds;

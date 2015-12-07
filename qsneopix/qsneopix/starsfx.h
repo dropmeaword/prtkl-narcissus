@@ -26,7 +26,7 @@ class StarsFX {
     StarsFX();
     StarsFX& bind(CRGB *leds, int cnt);
 
-    StartsFX &refreshRate(int freq); // times per second
+    StarsFX &refreshRate(int freq); // times per second
 
     StarsFX& enter();
     StarsFX& leave();

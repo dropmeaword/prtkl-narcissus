@@ -3,23 +3,29 @@
 
 #define DATARATE 115200 // 57600
 
-#define PIN_SPI_DTA_1 7
-#define PIN_SPI_CLK_1 11
+#define PIN_SPI_DTA_1 13
+#define PIN_SPI_CLK_1 7
 
-#define PIN_SPI_DTA_2 6
-#define PIN_SPI_CLK_2 10
+#define PIN_SPI_DTA_2 12
+#define PIN_SPI_CLK_2 6
 
-#define PIN_SPI_DTA_3 5
-#define PIN_SPI_CLK_3 9
+#define PIN_SPI_DTA_3 11
+#define PIN_SPI_CLK_3 5
 
-#define PIN_SPI_DTA_4 4
-#define PIN_SPI_CLK_4 8
+#define PIN_SPI_DTA_4 10
+#define PIN_SPI_CLK_4 4
+
+#define PIN_SPI_DTA_5 9
+#define PIN_SPI_CLK_5 3
+
+#define PIN_SPI_DTA_6 8
+#define PIN_SPI_CLK_6 2
 
 #define PIN 6
 //#define NUMBER_SEGMENTS 8
 //#define PIXELS_PER_SEGMENT 7
 
-#define NUMBER_STRIPS 4
+#define NUMBER_STRIPS 6
 #define NUMBER_SEGMENTS 3
 #define PIXELS_PER_SEGMENT 20
 
@@ -57,11 +63,13 @@ void setup() {
 
   randomSeed(analogRead(0));
 
-  FastLED.addLeds<NEOPIXEL, 12>(leds, 10);
+//  FastLED.addLeds<NEOPIXEL, 12>(leds, 10);
   FastLED.addLeds<APA102, PIN_SPI_DTA_1, PIN_SPI_CLK_1>(mleds[0], NUMBERPIXELS);
-//  FastLED.addLeds<APA102, PIN_SPI_DTA_2, PIN_SPI_CLK_2>(mleds[1], NUMBERPIXELS);
-//  FastLED.addLeds<APA102, PIN_SPI_DTA_3, PIN_SPI_CLK_3>(mleds[2], NUMBERPIXELS);
-//  FastLED.addLeds<APA102, PIN_SPI_DTA_4, PIN_SPI_CLK_4>(mleds[3], NUMBERPIXELS);
+  FastLED.addLeds<APA102, PIN_SPI_DTA_2, PIN_SPI_CLK_2>(mleds[1], NUMBERPIXELS);
+  FastLED.addLeds<APA102, PIN_SPI_DTA_3, PIN_SPI_CLK_3>(mleds[2], NUMBERPIXELS);
+  FastLED.addLeds<APA102, PIN_SPI_DTA_4, PIN_SPI_CLK_4>(mleds[3], NUMBERPIXELS);
+  FastLED.addLeds<APA102, PIN_SPI_DTA_5, PIN_SPI_CLK_5>(mleds[4], NUMBERPIXELS);
+  FastLED.addLeds<APA102, PIN_SPI_DTA_6, PIN_SPI_CLK_6>(mleds[5], NUMBERPIXELS);
     
   // init segment faders
   int n, m;
@@ -77,11 +85,12 @@ void setup() {
 
   pattern_test(leds);
   pattern_test(mleds[0]);
-//  pattern_test(mleds[2]);
-//  pattern_test(mleds[3]);
+  pattern_test(mleds[1]);
+  pattern_test(mleds[2]);
+  pattern_test(mleds[3]);
+  pattern_test(mleds[4]);
+  pattern_test(mleds[5]);
 
-//  pattern_test(mleds[2]);
-//  pattern_test(mleds[3]);
 //  pxstatus_ready();
 }
 
